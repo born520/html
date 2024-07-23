@@ -3,15 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sticky YouTube Video</title>
+  <title>Fullscreen YouTube Video</title>
   <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+
     #video-container {
       position: fixed;
       top: 0;
-      right: 0;
-      width: 30%;
-      padding-top: 16.67%; /* 16:9 aspect ratio */
-      height: auto;
+      left: 0;
+      width: 100%;
+      height: 100%;
       background: #000;
       z-index: 1000;
     }
