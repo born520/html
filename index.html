@@ -7,15 +7,16 @@
   <style>
     #video-container {
       position: fixed;
-      top: 10px;
-      right: 10px;
+      top: 0;
+      right: 0;
       width: 30%;
+      padding-top: 16.67%; /* 16:9 aspect ratio */
       height: auto;
-      overflow: hidden;
-      max-width: 100%;
-      padding-bottom: 56.25%; /* 16:9 aspect ratio */
+      background: #000;
+      z-index: 1000;
     }
-    iframe {
+
+    #player {
       position: absolute;
       top: 0;
       left: 0;
@@ -36,8 +37,8 @@
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
     var player;
-    var startTime = 26; // 시작 시간 (초)
-    var endTime = 36; // 끝 시간 (초)
+    var startTime = 10; // 시작 시간 (초)
+    var endTime = 13; // 끝 시간 (초)
 
     function onYouTubeIframeAPIReady() {
       player = new YT.Player('player', {
@@ -48,9 +49,7 @@
           'autoplay': 1,
           'mute': 1,
           'start': startTime,
-          'end': endTime,
-          'loop': 1,
-          'playlist': 'tD-MPekRiWI'
+          'end': endTime
         },
         events: {
           'onReady': onPlayerReady,
@@ -61,12 +60,22 @@
 
     function onPlayerReady(event) {
       event.target.playVideo();
+      checkTime();
     }
 
     function onPlayerStateChange(event) {
       if (event.data == YT.PlayerState.ENDED) {
         player.seekTo(startTime);
       }
+    }
+
+    function checkTime() {
+      setInterval(function() {
+        var currentTime = player.getCurrentTime();
+        if (currentTime >= endTime) {
+          player.seekTo(startTime);
+        }
+      }, 1000); // 1초마다 체크
     }
   </script>
 </body>
